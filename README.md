@@ -256,6 +256,28 @@ python transcribe.py audio.mp3 output.srt --model medium --beam-size 10
 
 **Speaker diarization:** Multi-speaker detection and labeling. Would require integrating pyannote.audio or similar. Implementation complexity: High. Use case: Interviews, meetings with multiple speakers.
 
+## Evaluation (WER) on LibriSpeech (test-clean)
+
+If you want to **verify transcription quality** quantitatively, you can evaluate on LibriSpeech `test-clean`
+using **WER (Word Error Rate)**.
+
+### Dataset layout (expected)
+
+Unzip LibriSpeech so you have a structure like:
+
+```text
+data/LibriSpeech/test-clean/<speaker_id>/<chapter_id>/*.flac
+data/LibriSpeech/test-clean/<speaker_id>/<chapter_id>/*.trans.txt
+
+
+
+`*.trans.txt` contains the **ground-truth transcript** for each utterance ID (e.g., `61-70968-0000`).
+
+### Quick sanity check (single file)
+
+```bash
+python transcribe.py "data/LibriSpeech/test-clean/61/70968/61-70968-0000.flac" "eval_outputs/61-70968-0000.srt" --model base --language en
+
 ## References
 
 - [faster-whisper](https://github.com/guillaumekln/faster-whisper) - CTranslate2 optimized Whisper
